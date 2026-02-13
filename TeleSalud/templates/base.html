@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>TeleSalud - {% block title %}{% endblock %}</title>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/output.css') }}"
+    />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+
+    <!-- Sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <!-- Flowbite -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
+    <!-- Tu JS -->
+    <script src="{{ url_for('static', filename='js/historialusuarios.js') }}"></script>
+  </head>
+
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-slate-950/60 backdrop-blur">
+      <div class="mx-auto flex max-w-screen-xl items-center justify-between px-4 py-3">
+        <!-- Logo -->
+        <a href="{{ url_for('base.index') }}" class="flex items-center gap-3">
+          <img
+            src="{{ url_for('static', filename='img/image.png') }}"
+            class="h-8 w-8"
+            alt="TeleSalud"
+          />
+          <span class="text-xl font-semibold tracking-tight text-white">
+            TeleSalud
+          </span>
+        </a>
+
+        <!-- Right actions (Desktop) -->
+        <div class="hidden items-center gap-2 md:flex">
+          {% if session.usuario_id %}
+            <a
+              href="{{ url_for('usuarios.cerrarSesion') }}"
+              class="inline-flex items-center justify-center rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15 transition"
+            >
+              Cerrar sesión
+            </a>
+          {% else %}
+            <a
+              href="{{ url_for('usuarios.iniciarSesion') }}"
+              class="inline-flex items-center justify-center rounded-xl bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15 transition"
+            >
+              Iniciar sesión
+            </a>
+            <a
+              href="{{ url_for('usuarios.registro') }}"
+              class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition"
+            >
+              Registrarse
+            </a>
+          {% endif %}
+        </div>
+
+        <!-- Mobile button -->
+        <button
+          data-collapse-toggle="navbar-sticky"
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white hover:bg-white/15 md:hidden"
+          aria-controls="navbar-sticky"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Abrir menú</span>
+          <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div class="hidden border-t border-white/10 bg-slate-950/80 backdrop-blur md:hidden" id="navbar-sticky">
+        <div class="mx-auto max-w-screen-xl px-4 py-3">
+          <ul class="flex flex-col gap-1">
+            {% if session.usuario_id %}
+              <li>
+                <a
+                  href="{{ url_for('base.index') }}"
+                  class="block rounded-xl px-3 py-2 text-sm font-medium hover:bg-white/10 transition"
+                >Inicio</a>
+              </li>
+              <li>
+                <a
+                  href="{{ url_for('mediciones.medicion') }}"
+                  class="block rounded-xl px-3 py-2 text-sm font-medium hover:bg-white/10 transition"
+                >Medición</a>
+              </li>
+              <li>
+                <a
+                  href="{{ url_for('mediciones.historial') }}"
+                  class="block rounded-xl px-3 py-2 text-sm font-medium hover:bg-white/10 transition"
+                >Historial</a>
+              </li>
+              <li>
+                <a
+                  href="{{ url_for('mediciones.resumen') }}"
+                  class="block rounded-xl px-3 py-2 text-sm font-medium hover:bg-white/10 transition"
+                >Resumen</a>
+              </li>
+              <li>
+                <a
+                  href="{{ url_for('mediciones.tutorial') }}"
+                  class="block rounded-xl px-3 py-2 text-sm font-medium hover:bg-white/10 transition"
+                >Tutorial</a>
+              </li>
+              <li class="pt-2">
+                <a
+                  href="{{ url_for('usuarios.cerrarSesion') }}"
+                  class="block rounded-xl bg-white/10 px-3 py-2 text-sm font-semibold hover:bg-white/15 transition"
+                >Cerrar sesión</a>
+              </li>
+            {% else %}
+              <li>
+                <a
+                  href="{{ url_for('usuarios.iniciarSesion') }}"
+                  class="block rounded-xl px-3 py-2 text-sm font-medium hover:bg-white/10 transition"
+                >Iniciar sesión</a>
+              </li>
+              <li>
+                <a
+                  href="{{ url_for('usuarios.registro') }}"
+                  class="block rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold hover:bg-blue-500 transition"
+                >Registrarse</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Desktop nav links -->
+      {% if session.usuario_id %}
+      <div class="hidden border-t border-white/10 md:block">
+        <div class="mx-auto max-w-screen-xl px-4 py-3">
+          <ul class="flex items-center gap-2 text-sm">
+            {% set current = request.endpoint %}
+            {% macro navlink(endpoint, label) -%}
+              <a
+                href="{{ url_for(endpoint) }}"
+                class="rounded-xl px-3 py-2 font-medium transition
+                {% if current == endpoint %} bg-white/10 text-white {% else %} text-slate-300 hover:bg-white/10 hover:text-white {% endif %}"
+              >{{ label }}</a>
+            {%- endmacro %}
+
+            <li>{{ navlink('base.index', 'Inicio') }}</li>
+            <li>{{ navlink('mediciones.medicion', 'Medición') }}</li>
+            <li>{{ navlink('mediciones.historial', 'Historial') }}</li>
+            <li>{{ navlink('mediciones.resumen', 'Resumen') }}</li>
+            <li>{{ navlink('mediciones.tutorial', 'Tutorial') }}</li>
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+    </nav>
+
+    <!-- MAIN -->
+    <main class="pt-24 md:pt-28">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-16 border-t border-white/10 bg-slate-950">
+      <div class="mx-auto max-w-screen-xl px-4 py-10">
+        <div class="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+          <a href="{{ url_for('base.index') }}" class="flex items-center gap-3">
+            <img src="{{ url_for('static', filename='img/image.png') }}" class="h-8 w-8" alt="TeleSalud" />
+            <span class="text-lg font-semibold text-white">TeleSalud</span>
+          </a>
+
+          <div class="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            <div>
+              <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-300">Creadores</h2>
+              <ul class="space-y-2 text-sm text-slate-400">
+                <li>Manuel Conrado</li>
+                <li>Dylan Rizo</li>
+                <li>Marying Mercado</li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-300">Síguenos</h2>
+              <ul class="space-y-2 text-sm text-slate-400">
+                <li><a href="#" class="hover:text-white transition">GitHub</a></li>
+                <li><a href="#" class="hover:text-white transition">Instagram</a></li>
+              </ul>
+            </div>
+            <div>
+              <h2 class="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-300">Legal</h2>
+              <ul class="space-y-2 text-sm text-slate-400">
+                <li><a href="#" class="hover:text-white transition">Términos &amp; Condiciones</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <span class="text-xs text-slate-500">
+            © 2026 TeleSalud. Todos los derechos reservados.
+          </span>
+
+          <div class="flex items-center gap-4 text-slate-400">
+            <a href="#" class="hover:text-white transition" aria-label="Facebook">
+              <!-- icon -->
+              <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 8 19">
+                <path fill-rule="evenodd" d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z" clip-rule="evenodd"/>
+              </svg>
+            </a>
+            <a href="#" class="hover:text-white transition" aria-label="GitHub">
+              <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z" clip-rule="evenodd"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Alertas Sweetalert2 -->
+    {% if success %}
+    <script>
+      Swal.fire({ title: "{{success}}", icon: "success" })
+    </script>
+    {% endif %}
+    {% if alert %}
+    <script>
+      Swal.fire({ title: "{{alert}}", icon: "error" })
+    </script>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  </body>
+</html>

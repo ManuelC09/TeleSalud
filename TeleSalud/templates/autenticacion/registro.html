@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+<section class="relative">
+  <!-- Fondo suave -->
+  <div class="absolute inset-0 -z-10">
+    <div class="h-[520px] bg-gradient-to-b from-blue-950/40 via-slate-950 to-slate-950"></div>
+    <div class="pointer-events-none absolute left-1/2 top-24 h-64 w-64 -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl"></div>
+  </div>
+
+  <div class="mx-auto max-w-screen-xl px-4 py-10">
+    <div class="mx-auto max-w-lg">
+      <!-- Header -->
+      <div class="mb-6 text-center">
+        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/10">
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11a4 4 0 100-8 4 4 0 000 8z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 8v6M23 11h-6" />
+          </svg>
+        </div>
+
+        <h1 class="text-3xl font-bold tracking-tight text-white">Crea tu cuenta</h1>
+        <p class="mt-2 text-sm text-slate-300">
+          Registra tus mediciones y mantén tu historial clínico organizado.
+        </p>
+      </div>
+
+      <!-- Card -->
+      <form
+        action="/registro"
+        method="POST"
+        class="rounded-3xl bg-white/5 p-6 shadow-xl ring-1 ring-white/10 backdrop-blur md:p-8"
+      >
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <!-- Nombre -->
+          <div class="md:col-span-2">
+            <label for="nombre" class="mb-1 block text-sm font-medium text-slate-200">Nombre completo</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Nombre Completo"
+              required
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none ring-0 transition focus:border-blue-500/60 focus:bg-white/10"
+            />
+          </div>
+
+          <!-- Fecha -->
+          <div>
+            <label for="fechaNacimiento" class="mb-1 block text-sm font-medium text-slate-200">Fecha de nacimiento</label>
+            <input
+              type="date"
+              id="fechaNacimiento"
+              name="fechaNacimiento"
+              min="1900-01-01"
+              max="2006-12-31"
+              required
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+            />
+          </div>
+
+          <!-- Sexo -->
+          <div>
+            <label for="sexo" class="mb-1 block text-sm font-medium text-slate-200">Sexo</label>
+            <select
+              id="sexo"
+              name="sexo"
+              required
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+            >
+              <option value="" disabled selected class="text-slate-900">Selecciona tu sexo</option>
+              <option value="Masculino" class="text-slate-900">Masculino</option>
+              <option value="Femenino" class="text-slate-900">Femenino</option>
+              <option value="Otro" class="text-slate-900">Otro</option>
+            </select>
+          </div>
+
+          <!-- Usuario -->
+          <div>
+            <label for="usuario" class="mb-1 block text-sm font-medium text-slate-200">Usuario</label>
+            <input
+              type="text"
+              id="usuario"
+              name="usuario"
+              placeholder="Usuario"
+              required
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="mb-1 block text-sm font-medium text-slate-200">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="nombre@ejemplo.com"
+              required
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+            />
+          </div>
+
+          <!-- Teléfono -->
+          <div class="md:col-span-2">
+            <label for="telefono" class="mb-1 block text-sm font-medium text-slate-200">Teléfono (opcional)</label>
+            <input
+              type="text"
+              id="telefono"
+              name="telefono"
+              placeholder="1234567890"
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+            />
+          </div>
+
+          <!-- Contraseña -->
+          <div>
+            <label for="contraseña" class="mb-1 block text-sm font-medium text-slate-200">Contraseña</label>
+            <input
+              type="password"
+              id="contraseña"
+              name="contraseña"
+              required
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+            />
+          </div>
+
+          <!-- Confirmar -->
+          <div>
+            <label for="confirmarContraseña" class="mb-1 block text-sm font-medium text-slate-200">Repite tu contraseña</label>
+            <input
+              type="password"
+              id="confirmarContraseña"
+              name="confirmarContraseña"
+              required
+              class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+            />
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="mt-5 flex items-start gap-3">
+          <input
+            type="checkbox"
+            id="terms"
+            class="mt-1 h-4 w-4 rounded border-white/20 bg-white/10 text-blue-600 focus:ring-2 focus:ring-blue-500/40"
+          />
+          <label for="terms" class="text-sm text-slate-300">
+            Acepto los
+            <a href="#" class="font-medium text-blue-400 hover:text-blue-300 hover:underline">términos y condiciones</a>
+          </label>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+        >
+          Registrar cuenta
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </button>
+
+        <!-- Link login -->
+        <div class="mt-6 text-center">
+          <p class="text-sm text-slate-300">
+            ¿Ya tienes una cuenta?
+            <a href="{{ url_for('usuarios.iniciarSesion') }}" class="font-medium text-blue-400 hover:text-blue-300 hover:underline">
+              Inicia sesión
+            </a>
+          </p>
+        </div>
+      </form>
+
+      <!-- mini footer text -->
+      <p class="mt-6 text-center text-xs text-slate-500">
+        TeleSalud guarda tus datos para brindarte seguimiento y exportación de mediciones.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

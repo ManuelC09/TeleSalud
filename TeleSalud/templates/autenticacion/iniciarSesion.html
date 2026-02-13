@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<section class="relative">
+  <!-- Fondo suave -->
+  <div class="absolute inset-0 -z-10">
+    <div class="h-[500px] bg-gradient-to-b from-blue-950/40 via-slate-950 to-slate-950"></div>
+    <div class="pointer-events-none absolute left-1/2 top-20 h-64 w-64 -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl"></div>
+  </div>
+
+  <div class="mx-auto max-w-screen-xl px-4 py-12">
+    <div class="mx-auto max-w-md">
+
+      <!-- Header -->
+      <div class="mb-8 text-center">
+        <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/10">
+          <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.79 3-4s-1.343-4-3-4-3 1.79-3 4 1.343 4 3 4z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A4 4 0 019 15h6a4 4 0 013.879 2.804"/>
+          </svg>
+        </div>
+
+        <h1 class="text-3xl font-bold tracking-tight text-white">
+          Bienvenido de nuevo
+        </h1>
+        <p class="mt-2 text-sm text-slate-300">
+          Inicia sesión para acceder a tu historial clínico.
+        </p>
+      </div>
+
+      <!-- Card -->
+      <form
+        action="/iniciarSesion"
+        method="POST"
+        class="rounded-3xl bg-white/5 p-6 shadow-xl ring-1 ring-white/10 backdrop-blur md:p-8"
+      >
+        <!-- Usuario -->
+        <div class="mb-5">
+          <label for="usuario" class="mb-1 block text-sm font-medium text-slate-200">
+            Usuario
+          </label>
+          <input
+            type="text"
+            id="usuario"
+            name="usuario"
+            placeholder="Tu usuario"
+            required
+            class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+          />
+        </div>
+
+        <!-- Contraseña -->
+        <div class="mb-6">
+          <label for="password" class="mb-1 block text-sm font-medium text-slate-200">
+            Contraseña
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="contraseña"
+            required
+            class="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none transition focus:border-blue-500/60 focus:bg-white/10"
+          />
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+        >
+          Iniciar sesión
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </button>
+
+        <!-- Link registro -->
+        <div class="mt-6 text-center">
+          <p class="text-sm text-slate-300">
+            ¿No tienes una cuenta?
+            <a
+              href="{{ url_for('usuarios.registro') }}"
+              class="font-medium text-blue-400 hover:text-blue-300 hover:underline"
+            >
+              Regístrate
+            </a>
+          </p>
+        </div>
+      </form>
+
+      <!-- Extra text -->
+      <p class="mt-6 text-center text-xs text-slate-500">
+        TeleSalud protege tu información médica con seguridad y privacidad.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

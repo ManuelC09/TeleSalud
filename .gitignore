@@ -1,0 +1,10 @@
+env
+.env
+__pycache__
+flask_session
+node_modules
+*.csv
+archivos/*.csv
+archivos
+package-lock.json
+package.json

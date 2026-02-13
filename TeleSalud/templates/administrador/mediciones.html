@@ -1,0 +1,77 @@
+{% extends "administrador/admon.html" %}
+{% block title %}Mediciones{% endblock %}
+
+{% block content %}
+<section class="relative mx-auto max-w-screen-xl px-4 py-10">
+  <!-- Header -->
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <h1 class="text-2xl md:text-3xl font-semibold text-white tracking-tight">Mediciones</h1>
+      <p class="mt-1 text-sm text-slate-300">Listado de mediciones registradas por los usuarios.</p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+      <a href="{{ url_for('administrador.descargar_datos_medicion') }}"
+         class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 transition">
+        Descargar datos
+      </a>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="mt-6 grid gap-3 md:grid-cols-3">
+    <div class="md:col-span-2">
+      <label class="sr-only" for="searchMed">Buscar</label>
+      <input
+        id="searchMed"
+        type="text"
+        placeholder="Buscar por nombre, bpm, spo2 o fecha..."
+        class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-400 outline-none
+               focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/30 transition"
+      />
+    </div>
+
+    <div class="flex items-center gap-3">
+      <label for="perPage" class="text-sm text-slate-300 whitespace-nowrap">Por página</label>
+      <select
+        id="perPage"
+        class="w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none
+               focus:border-blue-500/60 focus:ring-2 focus:ring-blue-500/30 transition"
+      >
+        <option value="5" selected>5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-white/10">
+        <thead class="bg-white/5">
+          <tr class="text-xs font-semibold uppercase tracking-wider text-slate-300">
+            <th class="px-6 py-4 text-left cursor-pointer" onclick="ordenarColumna(0)">Nombre</th>
+            <th class="px-6 py-4 text-left cursor-pointer" onclick="ordenarColumna(1)">BPM</th>
+            <th class="px-6 py-4 text-left cursor-pointer" onclick="ordenarColumna(2)">SpO₂</th>
+            <th class="px-6 py-4 text-left cursor-pointer" onclick="ordenarColumna(3)">Fecha</th>
+          </tr>
+        </thead>
+
+        <tbody id="tableBodymediciones" class="divide-y divide-white/10 text-sm">
+          <!-- JS inject -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer: status + pagination -->
+    <div class="flex flex-col gap-3 border-t border-white/10 bg-white/5 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <p id="tableStatus" class="text-xs text-slate-400">Cargando...</p>
+      <div id="paginacion" class="flex flex-wrap justify-center sm:justify-end gap-2"></div>
+    </div>
+  </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/tablemedicion.js') }}"></script>
+{% endblock %}

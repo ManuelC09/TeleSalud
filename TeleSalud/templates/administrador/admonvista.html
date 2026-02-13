@@ -1,0 +1,53 @@
+{% extends "/administrador/admon.html" %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<section class="relative min-h-[calc(100vh-7rem)] overflow-hidden">
+
+  <!-- Gradient Background -->
+  <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800"></div>
+
+  <!-- Glow Effects -->
+  <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl"></div>
+  <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-purple-600/20 blur-3xl"></div>
+
+  <!-- Content -->
+  <div class="relative mx-auto flex max-w-screen-xl items-center justify-center px-4 py-20">
+    <div class="w-full max-w-3xl rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-10 text-center shadow-2xl">
+
+      <h1 class="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+        Bienvenido al Panel de Administración
+      </h1>
+
+      <p class="mt-3 text-slate-300">
+        Gestiona usuarios, mediciones y estadísticas de TeleSalud desde aquí.
+      </p>
+
+      <!-- Action Buttons -->
+<div class="mt-8 grid gap-4 sm:grid-cols-3">
+
+  <!-- Mediciones -->
+  <a href="{% if session.admin %}{{ url_for('administrador.mediciones_vista') }}{% else %}{{ url_for('administrador.iniciarSesion') }}{% endif %}"
+     class="rounded-2xl bg-white/10 px-6 py-4 text-sm font-semibold text-white hover:bg-white/15 transition backdrop-blur">
+    Mediciones
+  </a>
+
+  <!-- Usuarios -->
+  <a href="{% if session.admin %}{{ url_for('administrador.usuarios_vista') }}{% else %}{{ url_for('administrador.iniciarSesion') }}{% endif %}"
+     class="rounded-2xl bg-white/10 px-6 py-4 text-sm font-semibold text-white hover:bg-white/15 transition backdrop-blur">
+    Usuarios
+  </a>
+
+  <!-- Estadísticas -->
+  <a href="{% if session.admin %}{{ url_for('administrador.estadisticas') }}{% else %}{{ url_for('administrador.iniciarSesion') }}{% endif %}"
+     class="rounded-2xl bg-blue-600 px-6 py-4 text-sm font-semibold text-white hover:bg-blue-500 transition">
+    Estadísticas
+  </a>
+
+</div>
+
+
+    </div>
+  </div>
+</section>
+{% endblock %}

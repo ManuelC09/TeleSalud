@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}Historial{% endblock %}
+
+{% block content %}
+<section class="relative">
+  <!-- Fondo -->
+  <div class="absolute inset-0 -z-10">
+    <div class="h-[420px] bg-gradient-to-b from-blue-950/40 via-slate-950 to-slate-950"></div>
+    <div class="pointer-events-none absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute right-24 top-40 h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
+  </div>
+
+  <div class="mx-auto max-w-screen-xl px-4 pt-28 pb-16">
+    <!-- Header -->
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <div class="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-slate-200 ring-1 ring-white/10">
+          <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/10">
+            <svg class="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-7 0h7m-7 0a2 2 0 01-2-2V7a2 2 0 012-2h2.5l1.5 1.5H17a2 2 0 012 2v7a2 2 0 01-2 2" />
+            </svg>
+          </span>
+          Historial • BPM & SpO₂
+        </div>
+        <h1 class="mt-4 text-3xl md:text-4xl font-bold tracking-tight text-white">Tu historial de mediciones</h1>
+        <p class="mt-2 text-slate-300">Consulta, ordena, filtra y exporta tus registros cuando lo necesites.</p>
+      </div>
+
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <!-- Buscar -->
+        <div class="relative">
+          <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+          <input
+            id="buscadorHistorial"
+            type="text"
+            placeholder="Buscar por BPM, SpO₂, hora o fecha..."
+            class="w-full sm:w-[320px] rounded-2xl bg-white/5 pl-10 pr-4 py-3 text-sm text-white placeholder:text-slate-400 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+          />
+        </div>
+
+        <!-- Export -->
+        <a
+          href="{{ url_for('mediciones.descargar') }}"
+          class="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+        >
+          <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0l4-4m-4 4l-4-4m8 6H8a2 2 0 01-2-2V7a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2z" />
+          </svg>
+          Descargar mis datos
+        </a>
+      </div>
+    </div>
+
+    <!-- Card + table -->
+    <div class="mt-8 overflow-hidden rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-2xl backdrop-blur">
+      <div class="flex flex-col gap-2 border-b border-white/10 px-6 py-5 md:flex-row md:items-center md:justify-between">
+        <p class="text-sm text-slate-300">
+          Mostrando <span id="contadorFiltrado" class="font-semibold text-white">0</span> registros
+        </p>
+
+        <div class="flex items-center gap-2 text-xs text-slate-400">
+          Tip: clic en el encabezado para ordenar
+        </div>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="min-w-full">
+          <thead class="bg-white/5 text-xs uppercase text-slate-200">
+            <tr>
+              <th onclick="ordenarColumna(0)" class="px-6 py-4 text-left cursor-pointer select-none">
+                <div class="inline-flex items-center gap-2">
+                  BPM
+                  <span class="text-slate-400">↕</span>
+                </div>
+              </th>
+              <th onclick="ordenarColumna(1)" class="px-6 py-4 text-left cursor-pointer select-none">
+                <div class="inline-flex items-center gap-2">
+                  SpO₂
+                  <span class="text-slate-400">↕</span>
+                </div>
+              </th>
+              <th onclick="ordenarColumna(2)" class="px-6 py-4 text-left cursor-pointer select-none">
+                <div class="inline-flex items-center gap-2">
+                  Hora
+                  <span class="text-slate-400">↕</span>
+                </div>
+              </th>
+              <th onclick="ordenarColumna(3)" class="px-6 py-4 text-left cursor-pointer select-none">
+                <div class="inline-flex items-center gap-2">
+                  Fecha
+                  <span class="text-slate-400">↕</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody id="tableBody" class="divide-y divide-white/10">
+            <!-- filas por JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty state -->
+      <div id="emptyState" class="hidden px-6 py-10 text-center">
+        <p class="text-white font-semibold">No hay resultados</p>
+        <p class="mt-1 text-sm text-slate-400">Prueba con otra búsqueda o limpia el filtro.</p>
+      </div>
+
+      <!-- Paginación -->
+      <div class="border-t border-white/10 px-6 py-5">
+        <div id="paginacion" class="flex flex-wrap justify-center items-center gap-2"></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

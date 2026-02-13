@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}Tutorial{% endblock %}
+
+{% block content %}
+<section class="relative">
+  <!-- Fondo -->
+  <div class="absolute inset-0 -z-10">
+    <div class="h-[520px] bg-gradient-to-b from-blue-950/40 via-slate-950 to-slate-950"></div>
+    <div class="pointer-events-none absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl"></div>
+    <div class="pointer-events-none absolute right-24 top-40 h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
+  </div>
+
+  <div class="mx-auto max-w-screen-xl px-4 py-12">
+    <!-- Header -->
+    <div class="mx-auto max-w-3xl text-center">
+      <div class="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-slate-200 ring-1 ring-white/10">
+        <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/10">
+          <svg class="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5l5 5v11a2 2 0 01-2 2z" />
+          </svg>
+        </span>
+        Guía rápida • BPM & SpO₂
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-white">
+        ¿Cómo usar TeleSalud para realizar tus mediciones?
+      </h1>
+      <p class="mt-3 text-slate-300">
+        Sigue estos pasos para obtener lecturas más estables y evitar errores durante la medición.
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-2">
+      <!-- Paso 1 -->
+      <article class="overflow-hidden rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-xl backdrop-blur">
+        <div class="relative h-44">
+          <img
+            class="h-full w-full object-cover opacity-90"
+            src="https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/321310_2200-1200x628.jpg"
+            alt="Ir a Medición"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+          <div class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white ring-1 ring-white/10">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 font-semibold">1</span>
+            Paso 1
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-white">Ve al apartado “Medición”</h3>
+          <p class="mt-2 text-sm text-slate-300">
+            Ahí encontrarás el botón para iniciar la medición de pulso cardíaco (BPM) y saturación (SpO₂).
+          </p>
+        </div>
+      </article>
+
+      <!-- Paso 2 -->
+      <article class="overflow-hidden rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-xl backdrop-blur">
+        <div class="relative h-44">
+          <img
+            class="h-full w-full object-cover opacity-90"
+            src="https://cdn.sparkfun.com/assets/learn_tutorials/5/7/7/MAX30105_Pulse_Oximetry.jpg"
+            alt="Colocar dedo en sensor"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+          <div class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white ring-1 ring-white/10">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 font-semibold">2</span>
+            Paso 2
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-white">Apoya tu dedo en el sensor</h3>
+          <p class="mt-2 text-sm text-slate-300">
+            Coloca el dedo de forma firme pero sin presionar demasiado para que el sensor lea correctamente.
+          </p>
+        </div>
+      </article>
+
+      <!-- Paso 3 -->
+      <article class="overflow-hidden rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-xl backdrop-blur">
+        <div class="relative h-44">
+          <img
+            class="h-full w-full object-cover opacity-90"
+            src="https://cdn.sparkfun.com/assets/learn_tutorials/5/7/7/MAX30105_Pulse_Oximetry.jpg"
+            alt="Mantener dedo sin moverse"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+          <div class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white ring-1 ring-white/10">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 font-semibold">3</span>
+            Paso 3
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-white">Evita movimientos bruscos</h3>
+          <p class="mt-2 text-sm text-slate-300">
+            Mantén la mano quieta. Los movimientos pueden provocar lecturas inestables o errores durante el proceso.
+          </p>
+        </div>
+      </article>
+
+      <!-- Paso 4 -->
+      <article class="overflow-hidden rounded-3xl bg-white/5 ring-1 ring-white/10 shadow-xl backdrop-blur">
+        <div class="relative h-44">
+          <img
+            class="h-full w-full object-cover opacity-90"
+            src="https://cdn.sparkfun.com/assets/learn_tutorials/5/7/7/MAX30105_Pulse_Oximetry.jpg"
+            alt="Final de la medición"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent"></div>
+          <div class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-black/40 px-3 py-1 text-xs text-white ring-1 ring-white/10">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/10 font-semibold">4</span>
+            Paso 4
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-lg font-semibold text-white">Espera la alerta de finalización</h3>
+          <p class="mt-2 text-sm text-slate-300">
+            Cuando aparezca la alerta, tu medición estará lista. Luego podrás verla en el historial (y si aplica, en tu correo).
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Tips -->
+    <div class="mx-auto mt-10 max-w-5xl rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 backdrop-blur">
+      <h2 class="text-lg font-semibold text-white">Tips para una mejor lectura</h2>
+      <ul class="mt-3 grid gap-2 text-sm text-slate-300 md:grid-cols-2">
+        <li class="flex gap-2"><span class="mt-1 h-2 w-2 rounded-full bg-blue-400"></span> Evita medir con manos frías.</li>
+        <li class="flex gap-2"><span class="mt-1 h-2 w-2 rounded-full bg-blue-400"></span> No presiones demasiado el sensor.</li>
+        <li class="flex gap-2"><span class="mt-1 h-2 w-2 rounded-full bg-blue-400"></span> Mantén el dedo centrado en el lector.</li>
+        <li class="flex gap-2"><span class="mt-1 h-2 w-2 rounded-full bg-blue-400"></span> Si falla, reintenta manteniendo quieta la mano.</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="mx-auto mt-8 flex max-w-5xl flex-col items-center justify-between gap-4 rounded-3xl bg-gradient-to-r from-blue-600/20 to-cyan-500/10 p-6 ring-1 ring-white/10 md:flex-row">
+      <div>
+        <p class="text-sm text-slate-200">¿Listo para medir?</p>
+        <p class="text-xs text-slate-400">Inicia una medición cuando quieras desde el apartado Medición.</p>
+      </div>
+      <a
+        href="{{ url_for('mediciones.medicion') }}"
+        class="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400/40"
+      >
+        Ir a Medición
+        <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}
