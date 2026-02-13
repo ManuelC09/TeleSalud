@@ -207,6 +207,7 @@ void enviarDatosMQTT(int frecuenciaCardiaca, int spo2) {
     StaticJsonDocument<200> doc;
     doc["HR"] = frecuenciaCardiaca;
     doc["SPO2"] = spo2;
+    doc["ID_DEVICE"] = client_id;  
     char bufferJson[512];
     serializeJson(doc, bufferJson);
     if (clienteMQTT.publish("TeleSalud/Datos", bufferJson)) {
