@@ -2,8 +2,8 @@ from flask_mqtt import Mqtt
 from threading import Condition
 import json
 
-measured_value = None  # Variable global para almacenar el valor medido
-mqtt_condition = Condition()  # Variable de condición para sincronizar la espera
+measured_value = None
+mqtt_condition = Condition()
 
 def init_mqtt(app, topic):
     mqtt_client = Mqtt(app)
@@ -29,16 +29,26 @@ def init_mqtt(app, topic):
             print('Measurement request received')
         else:
             try:
-                measured_value = json.loads(data['payload'])
+                nuevo_valor = json.loads(data['payload'])
+                
                 with mqtt_condition:
+                    measured_value = nuevo_valor
                     mqtt_condition.notify()
+                    
             except json.JSONDecodeError:
                 print("Error: Payload is not valid JSON")
 
     return mqtt_client
 
-def wait_for_message(timeout=25):
+def wait_for_message(timeout=32):
     global measured_value
+    retorno = None
+
     with mqtt_condition:
-        mqtt_condition.wait(timeout=timeout)  # Wait for a maximum of `timeout` seconds
-    return measured_value
+        # Borramos cualquier dato viejo antes de esperar
+        measured_value = None 
+        mqtt_condition.wait(timeout=timeout) 
+        retorno = measured_value
+        measured_value = None
+
+    return retorno
